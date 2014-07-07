@@ -1,0 +1,4 @@
+To import your own modules you need to modify the 
+system path from the iPython startup script found at:
+
+/Users/Wilhelm/.ipython/profile_default/startup
