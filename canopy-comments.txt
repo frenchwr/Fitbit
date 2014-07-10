@@ -2,3 +2,13 @@ To import your own modules you need to modify the
 system path from the iPython startup script found at:
 
 /Users/Wilhelm/.ipython/profile_default/startup
+
+Note that for efficiency reasons the python interpreter
+will only load a package/module once the first time that
+package/module is loaded in a new session. This means that
+any subsequent changes made to the module will not take effect
+in this session. You can get around this by typing:
+
+reload(module.modulename)
+
+into the python interpreter.

@@ -1,10 +1,22 @@
 import pandas as pd # 7/4/2014 -- installed version 0.14.0
+import os
+import inspect
+from util.getDays import getDays
 from util.cleaners import cleanDataFrame
 from util.wrappers import plotDataFrame
 
-activity = pd.read_csv("/Users/Wilhelm/Desktop/fitbit_export_20140704.csv",skiprows=1,nrows=43,index_col=0)
+# get path where this script is executed from
+scriptName = inspect.getframeinfo(inspect.currentframe()).filename
+scriptPath = os.path.dirname(os.path.abspath(scriptName))
+dataFile = scriptPath + "/../data/fitbit_export_20140704.csv"
+
+nrows = getDays(dataFile)
+skiprowsActivity = 1
+skiprowsSleep = nrows + 4
+
+activity = pd.read_csv(dataFile,skiprows=skiprowsActivity,nrows=nrows,index_col=0)
 cleanDataFrame(activity)
-sleep = pd.read_csv("/Users/Wilhelm/Desktop/fitbit_export_20140704.csv",skiprows=47,nrows=43,index_col=0)
+sleep = pd.read_csv(dataFile,skiprows=skiprowsSleep,nrows=nrows,index_col=0)
 cleanDataFrame(sleep)
 # combine activity and sleep data
 allData = pd.concat([activity,sleep])
