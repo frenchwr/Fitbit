@@ -6,10 +6,14 @@ from util.cleaners import cleanDataFrame
 from util.wrappers import plotDataFrame
 
 # get path where this script is executed from
+# I should wrap this up:
+# dataFile = getFilePath("fitbit_export_20140710.csv")
 scriptName = inspect.getframeinfo(inspect.currentframe()).filename
 scriptPath = os.path.dirname(os.path.abspath(scriptName))
-dataFile = scriptPath + "/../data/fitbit_export_20140704.csv"
+dataFile = scriptPath + "/../data/fitbit_export_20140710.csv"
 
+# I should write a little reader here that wraps getDays and read_csv:
+# [activity,sleep] = readRawDatafile(dataFile,["Activity","Sleep"])
 nrows = getDays(dataFile)
 skiprowsActivity = 1
 skiprowsSleep = nrows + 4
@@ -21,9 +25,12 @@ cleanDataFrame(sleep)
 # combine activity and sleep data
 allData = pd.concat([activity,sleep])
 
-# plot data, kind can be line, bar, barh, area, scatter, hexbin, pie 
-# Note: bar and barh try to cram all the tick labels onto the axis
-# Note: scatter, hexbin, and pie require x and y data
+# plotDataFrame tests:
+# kind can be line, bar, barh, area, scatter, hexbin, pie 
+# Note: Some of the plot types work with time series data only (time vs. var Y);
+#       This includes line, bar, barh, and area.
+# Note: Others plot types are designed to plot var X vs. var Y.
+#       This includes scatter, hexbin, and pie.
 
 # First test bar plots (time series data only)
 plotDataFrame(sleep,y=['Minutes Asleep','Minutes Awake'],kind='bar',startdate='2014-06-03',enddate='2014-06-24',stacked=True)
