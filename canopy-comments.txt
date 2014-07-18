@@ -1,9 +1,15 @@
-To import your own modules you need to modify the 
+1) To import your own modules you need to modify the 
 system path from the iPython startup script found at:
 
 /Users/Wilhelm/.ipython/profile_default/startup
 
-Note that for efficiency reasons the python interpreter
+Specifically, I created a file in this directory called
+00-startup.py containing the following lines:
+
+import sys,os,os.path
+sys.path.append(os.path.expanduser('/Users/frenchwr/Computing/Python-code/Python-Scripts/fitbit-data/Fitbit'))
+
+2) Note that for efficiency reasons the python interpreter
 will only load a package/module once the first time that
 package/module is loaded in a new session. This means that
 any subsequent changes made to the module will not take effect
