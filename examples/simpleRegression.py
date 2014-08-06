@@ -4,6 +4,8 @@ import inspect
 from util.getDays import getDays
 from util.cleaners import cleanDataFrame
 from sklearn import linear_model # installed 7/18/2014, 0.15.0
+import matplotlib.pyplot as plt
+import numpy as np 
 
 # get path where this script is executed from
 # I should wrap this up:
@@ -26,3 +28,28 @@ cleanDataFrame(sleep)
 allData = pd.concat([activity,sleep])
 
 clf = linear_model.LinearRegression()
+
+#sleep,x='Time in Bed',y='Minutes Asleep'
+#df[df.c > 0.5][['b', 'e']].values
+x = sleep['Time in Bed'].values
+y = sleep['Minutes Asleep'].values
+
+clf.fit(x, y)
+
+# The coefficients
+#print('Coefficients: \n', clf.coef_)
+# The mean square error
+#print("Residual sum of squares: %.2f"
+#      % np.mean((clf.predict(x) - y) ** 2))
+# Explained variance score: 1 is perfect prediction
+#print('Variance score: %.2f' % clf.score(x, t))
+
+# Plot outputs
+#plt.scatter(x, y,  color='black')
+#plt.plot(x, clf.predict(x), color='blue',
+#         linewidth=3)
+
+#plt.xticks(())
+#plt.yticks(())
+
+#plt.show()
