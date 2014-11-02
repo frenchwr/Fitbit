@@ -17,4 +17,9 @@ in this session. You can get around this by typing:
 
 reload(module.modulename)
 
-into the python interpreter.
+into the python interpreter. You may have to do:
+
+import util
+reload(util.wrappers)
+
+or something like that.
