@@ -1,13 +1,13 @@
 import pandas as pd # 11/01/2014 -- installed version 0.15.0
 from sklearn import linear_model # installed 11/01/2014, 0.15.2
-from util.getFilePath import getFilePath
-from util.readRawCSV import readRawCSV
+from util.get_file_path import get_file_path
+from util.read_raw_CSV import read_raw_CSV
 import util.cleaners as clean
 import matplotlib.pyplot as plt
 import numpy as np 
 
-dataFile = getFilePath("fitbit_export_20140710.csv")
-[activity,sleep] = readRawCSV(dataFile,["Activity","Sleep"])
+dataFile = get_file_path("fitbit_export_20140710.csv")
+[activity,sleep] = read_raw_CSV(dataFile,["Activity","Sleep"])
 allData = pd.concat([activity,sleep])
 
 x_raw = sleep['Minutes Awake'].values

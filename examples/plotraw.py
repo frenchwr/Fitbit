@@ -1,9 +1,9 @@
-from util.getFilePath import getFilePath
-from util.readRawCSV import readRawCSV
-from util.wrappers import plotDataFrame
+from util.get_file_path import get_file_path
+from util.read_raw_CSV import read_raw_CSV
+from util.wrappers import plot_data_frame
 
-dataFile = getFilePath("fitbit_export_20140710.csv")
-[activity,sleep] = readRawCSV(dataFile,["Activity","Sleep"])
+dataFile = get_file_path("fitbit_export_20140710.csv")
+[activity,sleep] = read_raw_CSV(dataFile,["Activity","Sleep"])
 #allData = pd.concat([activity,sleep])
 
 # 11/02/2014
@@ -12,11 +12,11 @@ dataFile = getFilePath("fitbit_export_20140710.csv")
 # broken...I'm just going to keep these plotting wrappers very minimal from now
 # on and update the aestetics if I really need to
 
-plotDataFrame(activity) # default kind is line
-plotDataFrame(sleep,kind='bar',stacked=True)
-plotDataFrame(activity,kind='area')
-plotDataFrame(activity,x='Minutes Sedentary',y='Minutes Very Active',kind='hexbin')
-plotDataFrame(sleep,kind='hist',stacked=True)
-plotDataFrame(activity,kind='box')
-plotDataFrame(activity,y=['Minutes Very Active','Minutes Lightly Active'],kind='pie')
-plotDataFrame(sleep,x='Minutes Asleep',y='Minutes Awake',kind='scatter')
+plot_data_frame(activity) # default kind is line
+plot_data_frame(sleep,kind='bar',stacked=True)
+plot_data_frame(activity,kind='area')
+plot_data_frame(activity,x='Minutes Sedentary',y='Minutes Very Active',kind='hexbin')
+plot_data_frame(sleep,kind='hist',stacked=True)
+plot_data_frame(activity,kind='box')
+plot_data_frame(activity,y=['Minutes Very Active','Minutes Lightly Active'],kind='pie')
+plot_data_frame(sleep,x='Minutes Asleep',y='Minutes Awake',kind='scatter')
