@@ -1,0 +1,52 @@
+import pandas as pd # 11/01/2014 -- installed version 0.15.0
+from sklearn import linear_model # installed 11/01/2014, 0.15.2
+from util.get_file_path import get_file_path
+from util.read_raw_CSV import read_raw_CSV
+from sklearn.preprocessing import PolynomialFeatures
+from numpy.polynomial.polynomial import polyval
+import util.cleaners as clean
+import matplotlib.pyplot as plt
+import numpy as np 
+
+dataFile = get_file_path("fitbit_export_20140710.csv")
+[activity,sleep] = read_raw_CSV(dataFile,["Activity","Sleep"])
+allData = pd.concat([activity,sleep])
+
+x_raw = sleep['Minutes Awake'].values
+y_raw = sleep['Minutes Asleep'].values
+x,y = clean.zap_zeros(x_raw,y_raw)
+x = clean.convert_to_matrix(x)
+y = clean.convert_to_matrix(y)
+
+poly = PolynomialFeatures(degree=2)
+x_poly = poly.fit_transform(x)
+
+# Break data up into training and test sets
+n_test = 7
+x_train = x[:-n_test] # all but last ten values
+x_test = x[-n_test:] # last ten values
+x_train_poly = x_poly[:-n_test]
+x_test_poly = x_poly[-n_test:]
+y_train = y[:-n_test]
+y_test = y[-n_test:]
+print "Training set size: ",len(x_train)
+print "Test size: ",len(x_test)
+print "Test data makes up: ",100.0*len(x_test)/len(x)," % of all data"
+
+clf = linear_model.LinearRegression()
+clf.fit(x_train_poly, y_train)
+
+# The coefficients
+print "Coefficients: \n", clf.coef_[0]
+# The mean square error
+print("Residual sum of squares: %.2f"
+      % np.mean((clf.predict(x_test_poly) - y_test) ** 2))
+# Explained variance score: 1 is perfect prediction
+print('Variance score: %.2f' % clf.score(x_test_poly, y_test))
+
+# Plot outputs
+plt.scatter(x_train, y_train,  color='black')
+y_test_poly = polyval(x_train, clf.coef_[0])
+plt.plot(x_train, y_test_poly, color='blue',linewidth=3)
+
+plt.show()

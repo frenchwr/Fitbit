@@ -9,6 +9,15 @@ Specifically, I created a file in this directory called
 import sys,os,os.path
 sys.path.append(os.path.expanduser('/Users/frenchwr/Computing/Python-code/Python-Scripts/fitbit-data/Fitbit'))
 
+This is actually done when you want to use a "package", which is 
+a directory containing lots of python scripts you want to import
+as modules. Each package directory must contain its own __init__.py
+file, which at the very least is an empty file, but can also do
+some initialization for the pacakge. Lots of helpful info for
+pacakges/modules can be found here:
+
+https://docs.python.org/2/tutorial/modules.html
+
 2) Note that for efficiency reasons the python interpreter
 will only load a package/module once the first time that
 package/module is loaded in a new session. This means that
@@ -21,5 +30,3 @@ into the python interpreter. You may have to do:
 
 import util
 reload(util.wrappers)
-
-or something like that.
