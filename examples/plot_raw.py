@@ -2,8 +2,8 @@ from util.get_file_path import get_file_path
 from util.read_raw_CSV import read_raw_CSV
 from util.wrappers import plot_data_frame
 
-dataFile = get_file_path("fitbit_export_20140710.csv")
-[activity,sleep] = read_raw_CSV(dataFile,["Activity","Sleep"])
+data_file = get_file_path("fitbit_export_20140710.csv")
+[activity,sleep] = read_raw_CSV(data_file,["Activity","Sleep"])
 #allData = pd.concat([activity,sleep])
 
 # 11/02/2014
