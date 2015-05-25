@@ -16,8 +16,9 @@ x,y = clean.zap_zeros(x_raw,y_raw)
 x = clean.convert_to_matrix(x)
 y = clean.convert_to_matrix(y)
 
-test_frac = 0.20 # fraction of data to use for testing (training set fraction is 1 - test_frac)
-[x_train,y_train,x_test,y_test] = split_data.split_consec(x,y,test_frac)
+test_frac = 0.15 # fraction of data to use for testing (training set fraction is 1 - test_frac)
+#[x_train,y_train,x_test,y_test] = split_data.split_consec(x,y,test_frac)
+[x_train,y_train,x_test,y_test] = split_data.split_rand(x,y,test_frac)
 
 clf = linear_model.LinearRegression(fit_intercept=True)
 clf.fit(x_train, y_train)
