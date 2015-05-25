@@ -1,5 +1,5 @@
-import pandas as pd # 11/01/2014 -- installed version 0.15.0
-from sklearn import linear_model # installed 11/01/2014, 0.15.2
+import pandas as pd
+from sklearn import linear_model 
 from util.get_file_path import get_file_path
 from util.read_raw_CSV import read_raw_CSV
 import util.cleaners as clean
@@ -9,15 +9,22 @@ import numpy as np
 data_file = get_file_path("fitbit_export_20140710.csv")
 [activity,sleep] = read_raw_CSV(data_file,["Activity","Sleep"])
 
-x_raw = sleep['Minutes Awake'].values
+x_raw = sleep['Minutes Awake'].values # convert dataframe to numpy array
 y_raw = sleep['Minutes Asleep'].values
 x,y = clean.zap_zeros(x_raw,y_raw)
 x = clean.convert_to_matrix(x)
 y = clean.convert_to_matrix(y)
 
 # Break data up into training and test sets
-n_test = 7
-x_train = x[:-n_test] # all but last ten values
+#
+# Need to write a utility function that splits data set
+# based on a fraction and breaks up the data randomly:
+#
+# [x_train,y_train,x_test,y_test] = break_data(x,y,test_frac)
+#
+test_frac = 0.15
+n_test = int (len(x) * test_frac)
+x_train = x[:-n_test] # all but last 
 x_test = x[-n_test:] # last ten values
 y_train = y[:-n_test]
 y_test = y[-n_test:]
