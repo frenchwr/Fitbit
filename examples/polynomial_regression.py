@@ -5,6 +5,7 @@ from util.read_raw_CSV import read_raw_CSV
 from sklearn.preprocessing import PolynomialFeatures
 from numpy.polynomial.polynomial import polyval
 import util.cleaners as clean
+import util.split_data as split_data
 import matplotlib.pyplot as plt
 import numpy as np 
 
@@ -17,26 +18,9 @@ x,y = clean.zap_zeros(x_raw,y_raw)
 x = clean.convert_to_matrix(x)
 y = clean.convert_to_matrix(y)
 
-# y = a + b*x + c*x^2
-poly = PolynomialFeatures(degree=2)
-# This returns a nsamples x 3 matrix, with
-# the first column set to 1 as there is no 
-# dependence on x for the a term. This is related
-# to why we use fit_intercept False in this example
-# but True in the linear regression example.
-x_poly = poly.fit_transform(x)
-
 # Break data up into training and test sets
-n_test = 7
-x_train = x[:-n_test] # all but last n_test values
-x_test = x[-n_test:] # last n_test values
-x_train_poly = x_poly[:-n_test]
-x_test_poly = x_poly[-n_test:]
-y_train = y[:-n_test]
-y_test = y[-n_test:]
-print "Training set size: ",len(x_train)
-print "Test size: ",len(x_test)
-print "Test data makes up: ",100.0*len(x_test)/len(x)," % of all data"
+test_frac = 0.15
+[x_train,y_train,x_test,y_test,x_train_poly,x_test_poly] = split_data.split_consec(x,y,test_frac,True)
 
 clf = linear_model.LinearRegression(fit_intercept=False)
 clf.fit(x_train_poly, y_train)

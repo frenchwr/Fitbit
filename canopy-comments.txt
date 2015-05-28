@@ -1,3 +1,6 @@
+
+Much of this is historical, as I have transitioned away from using Canopy to Anaconda.
+
 1) To import your own modules you need to modify the 
 system path from the iPython startup script found at:
 
