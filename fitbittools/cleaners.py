@@ -12,12 +12,6 @@ class Cleaner:
                 df[c] = df[c].str.replace(',','')
                 df[c] = df[c].astype(float)
 
-    def zap_zeros(x,y):
+    def zap_zeros(self,df):
         """Removes elements from numpy array with missing data"""
-        zero_index_list = []
-        for ind,val in enumerate(y):
-            if val == 0: zero_index_list.append(ind)
-        
-        x_new = np.delete(x,zero_index_list)
-        y_new = np.delete(y,zero_index_list)
-        return x_new,y_new
+        return df[(df.T != 0).any()]
