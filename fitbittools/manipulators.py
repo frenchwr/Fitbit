@@ -60,5 +60,5 @@ class Manipulator:
         if not Poly:
             return x_train,y_train,x_test,y_test
         else:
-            [x_train_poly,x_test_poly] = get_poly_range(x,training_inds,test_inds)
+            [x_train_poly,x_test_poly] = self.get_poly_range(x,training_inds,test_inds)
             return x_train,y_train,x_test,y_test,x_train_poly,x_test_poly
