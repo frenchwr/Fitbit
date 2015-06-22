@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+from numpy import arange
 
 class Plotter:
     """Class for plotting data"""
@@ -28,13 +29,24 @@ class Plotter:
         # so need to define behavior for each plotting type
     
         if kind is 'bar' or kind is 'barh' or \
-           kind is 'area': df.plot(x=x,y=y,kind=kind,stacked=stacked,figsize=fsize)
-        elif kind is 'hexbin': df.plot(x=x,y=y,kind=kind,gridsize=gridsize,figsize=fsize)
-        elif kind is 'hist': df.plot(x=x,y=y,kind=kind,
-                                     stacked=stacked,bins=bins,figsize=fsize)
-        elif kind is 'box': df.plot(x=x,y=y,kind=kind,figsize=fsize)
-        elif kind is 'scatter': df.plot(x=x,y=y,kind=kind,figsize=fsize)
-        elif kind is 'pie': df.plot(x=x,y=y,kind=kind,figsize=fsize)
-        else: df.plot(x=x,y=y,figsize=fsize)
+           kind is 'area': 
+            ax = df.plot(x=x,y=y,kind=kind,stacked=stacked,figsize=fsize,rot=45)
+            n = 5
+            ticks = ax.xaxis.get_ticklocs()
+            ticklabels = [l.get_text() for l in ax.xaxis.get_ticklabels()]
+            ax.xaxis.set_ticks(ticks[::n])
+            ax.xaxis.set_ticklabels(ticklabels[::n])
+        elif kind is 'hexbin': 
+            df.plot(x=x,y=y,kind=kind,gridsize=gridsize,figsize=fsize)
+        elif kind is 'hist': 
+            df.plot(x=x,y=y,kind=kind,stacked=stacked,bins=bins,figsize=fsize)
+        elif kind is 'box': 
+            df.plot(x=x,y=y,kind=kind,figsize=fsize)
+        elif kind is 'scatter': 
+            df.plot(x=x,y=y,kind=kind,figsize=fsize)
+        elif kind is 'pie': 
+            df.plot(x=x,y=y,kind=kind,figsize=fsize)
+        else: 
+            df.plot(x=x,y=y,figsize=fsize)
     
         plt.show()
