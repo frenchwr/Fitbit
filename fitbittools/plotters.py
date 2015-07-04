@@ -11,6 +11,8 @@ class Plotter:
                         gridsize=35,bins=15):
         """Wrapper for plotting pandas data frame"""
 
+        xstr = x 
+        ystr = y
         if type(x) is str:
             x = [x] # convert string to list
         if type(y) is str:
@@ -37,15 +39,22 @@ class Plotter:
             ax.xaxis.set_ticks(ticks[::n])
             ax.xaxis.set_ticklabels(ticklabels[::n])
         elif kind is 'hexbin': 
-            df.plot(x=x,y=y,kind=kind,gridsize=gridsize,figsize=fsize)
+            ax = df.plot(x=x,y=y,kind=kind,gridsize=gridsize,figsize=fsize)
+            ax.set_xlabel(xstr)
+            ax.set_ylabel(ystr)
         elif kind is 'hist': 
             df.plot(x=x,y=y,kind=kind,stacked=stacked,bins=bins,figsize=fsize)
         elif kind is 'box': 
             df.plot(x=x,y=y,kind=kind,figsize=fsize)
+            plt.xticks(rotation=45)
         elif kind is 'scatter': 
-            df.plot(x=x,y=y,kind=kind,figsize=fsize)
+            ax= df.plot(x=x,y=y,kind=kind,figsize=fsize)
+            ax.set_xlabel(xstr)
+            ax.set_ylabel(ystr)
         elif kind is 'pie': 
-            df.plot(x=x,y=y,kind=kind,figsize=fsize)
+            #df.plot(x=x,y=y,kind=kind,figsize=fsize)
+            print("Fitbittools.plot_data_frame(): Pie charts aren't supported at the moment!")
+            return
         else: 
             df.plot(x=x,y=y,figsize=fsize)
     
