@@ -4,17 +4,13 @@ import fitbittools.cleaners as cln
 
 class DataBase:
     """Abstract class for data categories"""
-    def __init__(self,filename,start_line,data_size,clean=True):
+    def __init__(self,filename,start_line,data_size):
         self.pd_data = pd.read_csv(filename,skiprows=start_line,
                                    nrows=data_size,index_col=0)
-        if clean: 
-            cleaner = cln.Cleaner()
-            cleaner.remove_commas(self.pd_data)
-            self.pd_data = cleaner.zap_zeros(self.pd_data)
 
 class Activity(DataBase):
     """Stores activity data"""
-    def __init__(self,filename,start_line,data_size,clean=True):
+    def __init__(self,filename,start_line,data_size):
         # pandas data frame
         self.pd_data = None
         # numpy arrays
@@ -28,7 +24,7 @@ class Activity(DataBase):
         self.very_active = None
         self.activity_calories = None
         if start_line is not None:
-            DataBase.__init__(self,filename,start_line,data_size,clean)
+            DataBase.__init__(self,filename,start_line,data_size)
             self.calories = self.pd_data['Calories Burned'].values
             self.steps = self.pd_data['Steps'].values
             self.distance = self.pd_data['Distance'].values
@@ -41,7 +37,7 @@ class Activity(DataBase):
 
 class Sleep(DataBase):
     """Stores sleep data"""
-    def __init__(self,filename,start_line,data_size,clean=True):
+    def __init__(self,filename,start_line,data_size):
         # pandas data frame
         self.pd_data = None
         # numpy arrays
@@ -50,7 +46,7 @@ class Sleep(DataBase):
         self.num_awakenings = None
         self.in_bed = None
         if start_line is not None:
-            DataBase.__init__(self,filename,start_line,data_size,clean)
+            DataBase.__init__(self,filename,start_line,data_size)
             self.asleep = self.pd_data['Minutes Asleep'].values
             self.awake = self.pd_data['Minutes Awake'].values
             self.num_awakenings = self.pd_data['Number of Awakenings'].values
@@ -58,20 +54,26 @@ class Sleep(DataBase):
 
 class Weight(DataBase):
     """Stores weight data"""
-    def __init__(self,filename,start_line,data_size,clean=True):
+    def __init__(self,filename,start_line,data_size):
         # pandas data frame
         self.pd_data = None
         # numpy arrays
         if start_line is not None:
-            DataCategory.__init__(self,filename,start_line,data_size,clean)
+            DataBase.__init__(self,filename,start_line,data_size)
 
 class FitBitData:
     """Fitbit data container"""
     def __init__(self,filename,clean=True):
         start_lines,data_size = self.get_file_info(filename)
-        self.activity = Activity(filename,start_lines[0],data_size[0],clean)
-        self.sleep = Sleep(filename,start_lines[1],data_size[1],clean)
-        self.weight = Weight(filename,start_lines[2],data_size[2],clean)
+        self.activity = Activity(filename,start_lines[0],data_size[0])
+        self.sleep = Sleep(filename,start_lines[1],data_size[1])
+        self.weight = Weight(filename,start_lines[2],data_size[2])
+        self.comp_pd_data = pd.concat([self.sleep.pd_data, self.activity.pd_data], axis=1)
+        if clean: 
+            cleaner = cln.Cleaner()
+            self.activity.pd_data = cleaner.clean_dataframe(self.activity.pd_data)
+            self.sleep.pd_data = cleaner.clean_dataframe(self.sleep.pd_data)
+            self.comp_pd_data = cleaner.clean_dataframe(self.comp_pd_data)
 
     def get_file_info(self,filename):
         """finds initial line and total lines for each category"""

@@ -13,5 +13,12 @@ class Cleaner:
                 df[c] = df[c].astype(float)
 
     def zap_zeros(self,df):
-        """Removes elements from numpy array with missing data"""
-        return df[(df.T != 0).any()]
+        """Removes elements from dataframe with missing data"""
+        return df[(df != 0).all(1)]
+
+    def clean_dataframe(self,df):
+        """Calls zap_zeros and remove_commas on a dataframe object"""
+        self.remove_commas(df)
+        return self.zap_zeros(df)
+        #trim_df = self.zap_zeros(df)
+        #return trim_df

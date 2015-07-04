@@ -6,6 +6,12 @@ class Plotter:
     def __init__(self):
         pass
 
+    # TODO: add plot_data_frame_multi()
+    #       
+    # Need to wrap up the if-else block into another function call
+    # that returns an axis object, then we can call it as many times
+    # as needed before finally plotting all data on the same axis
+
     def plot_data_frame(self,df,x=None,y=None,kind=None,start_date=None,
                         end_date=None,stacked=False,figsize=None,
                         gridsize=35,bins=15):
@@ -43,12 +49,12 @@ class Plotter:
             ax.set_xlabel(xstr)
             ax.set_ylabel(ystr)
         elif kind is 'hist': 
-            df.plot(x=x,y=y,kind=kind,stacked=stacked,bins=bins,figsize=fsize)
+            ax = df.plot(x=x,y=y,kind=kind,stacked=stacked,bins=bins,figsize=fsize)
         elif kind is 'box': 
-            df.plot(x=x,y=y,kind=kind,figsize=fsize)
+            ax = df.plot(x=x,y=y,kind=kind,figsize=fsize)
             plt.xticks(rotation=45)
         elif kind is 'scatter': 
-            ax= df.plot(x=x,y=y,kind=kind,figsize=fsize)
+            ax = df.plot(x=x,y=y,kind=kind,figsize=fsize)
             ax.set_xlabel(xstr)
             ax.set_ylabel(ystr)
         elif kind is 'pie': 
