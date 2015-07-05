@@ -13,51 +13,22 @@ class Activity(DataBase):
     def __init__(self,filename,start_line,data_size):
         # pandas data frame
         self.pd_data = None
-        # numpy arrays
-        self.calories = None
-        self.steps = None
-        self.distance = None
-        self.floors = None
-        self.sedentary = None
-        self.lightly_active = None
-        self.fairly_active = None
-        self.very_active = None
-        self.activity_calories = None
         if start_line is not None:
             DataBase.__init__(self,filename,start_line,data_size)
-            self.calories = self.pd_data['Calories Burned'].values
-            self.steps = self.pd_data['Steps'].values
-            self.distance = self.pd_data['Distance'].values
-            self.floors = self.pd_data['Floors'].values
-            self.sedentary = self.pd_data['Minutes Sedentary'].values
-            self.lightly_active = self.pd_data['Minutes Lightly Active'].values
-            self.fairly_active = self.pd_data['Minutes Fairly Active'].values
-            self.very_active = self.pd_data['Minutes Very Active'].values
-            self.activity_calories = self.pd_data['Activity Calories'].values
 
 class Sleep(DataBase):
     """Stores sleep data"""
     def __init__(self,filename,start_line,data_size):
         # pandas data frame
         self.pd_data = None
-        # numpy arrays
-        self.asleep = None
-        self.awake = None
-        self.num_awakenings = None
-        self.in_bed = None
         if start_line is not None:
             DataBase.__init__(self,filename,start_line,data_size)
-            self.asleep = self.pd_data['Minutes Asleep'].values
-            self.awake = self.pd_data['Minutes Awake'].values
-            self.num_awakenings = self.pd_data['Number of Awakenings'].values
-            self.in_bed = self.pd_data['Time in Bed'].values
 
 class Weight(DataBase):
     """Stores weight data"""
     def __init__(self,filename,start_line,data_size):
         # pandas data frame
         self.pd_data = None
-        # numpy arrays
         if start_line is not None:
             DataBase.__init__(self,filename,start_line,data_size)
 

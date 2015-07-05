@@ -12,9 +12,15 @@ class Plotter:
     # that returns an axis object, then we can call it as many times
     # as needed before finally plotting all data on the same axis
 
+    def plot_np_data(self):
+        """Returns Matplotlib figure and axis object"""
+        fig = plt.figure()
+        ax = fig.add_subplot(111)
+        return fig,ax
+
     def plot_data_frame(self,df,x=None,y=None,kind=None,start_date=None,
                         end_date=None,stacked=False,figsize=None,
-                        gridsize=35,bins=15):
+                        gridsize=35,bins=15,style=None):
         """Wrapper for plotting pandas data frame"""
 
         xstr = x 
@@ -54,7 +60,8 @@ class Plotter:
             ax = df.plot(x=x,y=y,kind=kind,figsize=fsize)
             plt.xticks(rotation=45)
         elif kind is 'scatter': 
-            ax = df.plot(x=x,y=y,kind=kind,figsize=fsize)
+            #ax = df.plot(x=x,y=y,kind=kind,figsize=fsize,style=style)
+            ax = df.plot(x=x,y=y,kind=kind,figsize=fsize,style=['o','rx'])
             ax.set_xlabel(xstr)
             ax.set_ylabel(ystr)
         elif kind is 'pie': 
