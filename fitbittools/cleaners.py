@@ -20,5 +20,3 @@ class Cleaner:
         """Calls zap_zeros and remove_commas on a dataframe object"""
         self.remove_commas(df)
         return self.zap_zeros(df)
-        #trim_df = self.zap_zeros(df)
-        #return trim_df

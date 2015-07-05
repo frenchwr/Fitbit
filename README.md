@@ -13,5 +13,11 @@ Known Issues
 - Need to use Pandas 0.16.1 or higher. There was a bug in pandas.read_csv that
 failed to handle blank lines in csv files.
 
-- To propogate changes to notebooks you sometimes need to close notebook and
-  reload the notebook server.
+- To update changes to fitbittools module from notebook use these two lines
+
+```python
+%load_ext autoreload
+%autoreload 2
+```
+
+After you've run this once within a cell, you can comment out the first line.

@@ -1,22 +1,33 @@
 import matplotlib.pyplot as plt
-from numpy import arange
+from numpy import arange,random
 
 class Plotter:
     """Class for plotting data"""
     def __init__(self):
         pass
 
-    # TODO: add plot_data_frame_multi()
-    #       
-    # Need to wrap up the if-else block into another function call
-    # that returns an axis object, then we can call it as many times
-    # as needed before finally plotting all data on the same axis
+    def plot_multi_data(self,df,x,*args):
+        """Plot multiple data sets on same figure"""
+        fig,ax = plt.subplots()
 
-    def plot_np_data(self):
-        """Returns Matplotlib figure and axis object"""
-        fig = plt.figure()
-        ax = fig.add_subplot(111)
-        return fig,ax
+        colors = ('b', 'g', 'r', 'c', 'm', 'y', 'k')
+
+        xnp = df[x].values
+        ynp_list = [] # list of numpy arrays
+        for ystring in args:
+            ynp_list.append(df[ystring].values)
+
+        maxyval = 0
+        for ind,ynp in enumerate(ynp_list):
+           color_ind = ind % len(colors)
+           ax.plot(xnp,ynp,colors[color_ind]+'o',label=args[ind])
+           if ( max(ynp) > maxyval ): maxyval = max(ynp)
+
+        ax.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
+        ax.set_ylim(0,1.1*maxyval)
+        ax.set_xlabel(x,fontsize=16)
+        ax.grid(color='k', linestyle='--', linewidth=0.3)
+        fig.show()
 
     def plot_data_frame(self,df,x=None,y=None,kind=None,start_date=None,
                         end_date=None,stacked=False,figsize=None,
